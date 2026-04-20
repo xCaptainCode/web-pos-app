@@ -30,7 +30,7 @@ class User extends \Phalcon\Mvc\Model
     public $password;
     /**
      *
-     * @var string
+     * @var boolean
      */
     public $is_active;
 
