@@ -1,3 +1,30 @@
+<style>
+   .seamless-group:focus-within {
+      box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
+      border-radius: 0.25rem;
+   }
+
+   .seamless-group:focus-within .form-control,
+   .seamless-group:focus-within .btn {
+      border-color: #80bdff !important;
+   }
+
+   .seamless-group .form-control:focus {
+      box-shadow: none;
+      border-color: #ced4da;
+   }
+
+   #pwdVisibility {
+      border-color: #ced4da;
+      transition: all 0.2s;
+   }
+
+   #pwdVisibility:hover i {
+      color: #333 !important;
+   }
+</style>
+
+
 <div class="content-header">
    <div class="container">
       <div class="row mb-2">
@@ -64,29 +91,38 @@
                            <div class="form-group">
                               <label for="inputName">Name</label>
                               <input type="hidden" name="id" id="id" value="{{ session.id }}">
-                              <input type="text" class="form-control form-control-sm" id="inputName" name="name" placeholder="Name" value="{{ session.name }}" required>
+                              <input type="text" class="form-control form-control-sm" id="inputName" name="name"
+                                 placeholder="Name" value="{{ session.name }}" required>
                               <span class="text-danger small" id="nameError"></span>
                            </div>
                            <div class="form-group">
                               <label for="inputUsername">Username</label>
-                              <input type="text" class="form-control form-control-sm" id="inputUsername" name="username" placeholder="Username" value="{{ session.username }}" required>
+                              <input type="text" class="form-control form-control-sm" id="inputUsername" name="username"
+                                 placeholder="Username" value="{{ session.username }}" required>
                               <span class="text-danger small" id="usernameError"></span>
                            </div>
                         </div>
                         <div class="col-md-6">
                            <div class="form-group">
                               <label for="inputRole">Role</label>
-                              <input type="text" class="form-control form-control-sm" id="inputName" placeholder="Name" value="{{ session.role }}" readonly>                           
+                              <input type="text" class="form-control form-control-sm" id="inputName" placeholder="Name"
+                                 value="{{ session.role }}" readonly>
                            </div>
+                           {# Di dalam bagian form di profile/index.volt #}
                            <div class="form-group">
                               <label for="inputPassword"><i class="fas fa-key"></i> New Password</label>
-                              <div class="input-group">
-                                 <input type="password" class="form-control form-control-sm" id="inputPassword" name="password" placeholder="Password">
-                                 <span class="input-group-append">
-                                    <button type="button" id="pwdVisibility" class="btn btn-sm btn-default btn-flat"><i class="fa-solid fa-eye"></i></button>
-                                 </span>
+                              <div class="input-group input-group-sm seamless-group">
+                                 <input type="password" class="form-control border-right-0" id="inputPassword"
+                                    name="password" placeholder="Password">
+                                 <div class="input-group-append">
+                                    <button type="button" id="pwdVisibility"
+                                       class="btn border-left-0 shadow-none">
+                                       <i class="fas fa-eye text-muted" id="eyeIcon"></i>
+                                    </button>
+                                 </div>
                               </div>
                            </div>
+
                         </div>
                         <div class="col-md-12 mt-2 text-right">
                            <button type="submit" class="btn btn-sm btn-danger">Submit</button>
@@ -105,21 +141,24 @@
 
 <script>
    // toggle password btn visibility
-   $(document).ready(function() {
-      $('#pwdVisibility').on('click', function() {
-         if ($('#inputPassword').attr('type') == 'password') {
-            $('#inputPassword').attr('type', 'text');
-            $('#pwdVisibility').html('<i class="fa-solid fa-eye-slash"></i>');
+   $(document).ready(function () {
+      $('#pwdVisibility').on('click', function () {
+         var input = $('#inputPassword');
+         var icon = $('#eyeIcon');
+
+         if (input.attr('type') == 'password') {
+            input.attr('type', 'text');
+            icon.removeClass('fa-eye').addClass('fa-eye-slash');
          } else {
-            $('#inputPassword').attr('type', 'password');
-            $('#pwdVisibility').html('<i class="fa-solid fa-eye"></i>');
+            input.attr('type', 'password');
+            icon.removeClass('fa-eye-slash').addClass('fa-eye');
          }
       });
    });
 
    // tambahkan validation menggunakan jQuery untuk input yang required
-   $(document).ready(function() {
-      $('#inputName').on('change', function() {
+   $(document).ready(function () {
+      $('#inputName').on('change', function () {
          if ($(this).val() == '') {
             $(this).addClass('is-invalid');
             $('#nameError').text('Name is required');
@@ -128,7 +167,7 @@
             $('#nameError').text('');
          }
       });
-      $('#inputUsername').on('change', function() {
+      $('#inputUsername').on('change', function () {
          if ($(this).val() == '') {
             $(this).addClass('is-invalid');
             $('#usernameError').text('Username is required');
