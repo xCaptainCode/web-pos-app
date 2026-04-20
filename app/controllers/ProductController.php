@@ -2,16 +2,57 @@
 
 use Phalcon\Db;
 use Phalcon\Mvc\Controller;
+use Phalcon\Mvc\View;
 
 class ProductController extends Controller {
    public function indexAction() {
-      $products = $this->db->fetchAll(
-         "SELECT p.id, p.name, p.description, p.stock, p.price, p.is_active, c.name AS category_name, p.category_id
-            FROM products p
-            LEFT JOIN categories c ON p.category_id = c.id
-            ORDER BY p.name ASC",
+      $category_id = $this->request->getQuery("category_id", "string");
+
+      $sql = "SELECT p.id, p.name, p.description, p.stock, p.price, p.is_active, c.name AS category_name, p.category_id
+              FROM products p
+              LEFT JOIN categories c ON p.category_id = c.id";
+      
+      $params = [];
+      if ($category_id && $category_id !== "All") {
+         $sql .= " WHERE p.category_id = :category_id";
+         $params['category_id'] = $category_id;
+      }
+
+      $sql .= " ORDER BY p.name ASC";
+
+      $products = $this->db->fetchAll($sql, Db::FETCH_ASSOC, $params);
+
+      $categories = $this->db->fetchAll(
+         "SELECT id, name FROM categories WHERE is_active = true ORDER BY sort_order, name",
          Db::FETCH_ASSOC
       );
+
+      $this->view->products          = json_decode(json_encode($products), false);
+      $this->view->categories        = json_decode(json_encode($categories), false); 
+      $this->view->selected_category = $category_id;
+   }
+   public function loadAction() {
+
+      $category_id = $this->request->getPost("category_id");
+
+      if ($category_id === "All" || empty($category_id)) {
+         $products = $this->db->fetchAll(
+            "SELECT p.id, p.name, p.description, p.stock, p.price, p.is_active, c.name AS category_name, p.category_id
+               FROM products p
+               LEFT JOIN categories c ON p.category_id = c.id
+               ORDER BY p.name ASC",
+            Db::FETCH_ASSOC
+         );
+      } else {
+         $products = $this->db->fetchAll(
+            "SELECT p.id, p.name, p.description, p.stock, p.price, p.is_active, c.name AS category_name, p.category_id
+               FROM products p
+               LEFT JOIN categories c ON p.category_id = c.id
+               WHERE p.category_id = :category_id
+               ORDER BY p.name ASC",
+            Db::FETCH_ASSOC, ["category_id"=> $category_id]
+         );
+      }
 
       $categories = $this->db->fetchAll(
          "SELECT id, name FROM categories WHERE is_active = true ORDER BY sort_order, name",
@@ -20,6 +61,9 @@ class ProductController extends Controller {
 
       $this->view->products   = json_decode(json_encode($products), false);
       $this->view->categories = json_decode(json_encode($categories), false); 
+
+      $this->view->pick('product/load');
+      $this->view->setRenderLevel(View::LEVEL_ACTION_VIEW);
    }
 
    public function saveAction() {
@@ -37,17 +81,20 @@ class ProductController extends Controller {
       $product->price       = $this->request->getPost('price', 'int');
       $product->is_active   = $this->request->getPost('is_active') === '1';
 
+      $ref_category_id = $this->request->getPost('ref_category_id', 'string');
+      $redirect_url    = 'product' . ($ref_category_id ? '?category_id=' . $ref_category_id : '');
+
       if (! $product->save()) {
          $messages = [];
          foreach ($product->getMessages() as $message) {
             $messages[] = $message->getMessage();
          }
          $this->flashSession->error(implode('<br>', $messages));
-         return $this->response->redirect('product');
+         return $this->response->redirect($redirect_url);
       }
 
       $this->flashSession->notice('Produk berhasil ditambahkan.');
-      return $this->response->redirect('product');
+      return $this->response->redirect($redirect_url);
    }
 
    public function updateAction() {
@@ -57,33 +104,37 @@ class ProductController extends Controller {
          return $this->response->redirect('product');
       }
 
-      
-      $id          = $this->request->getPost('id', 'string');
-      $category_id = $this->request->getPost('category_id', 'string');
-      $name        = $this->request->getPost('name', 'string');
-      $description = $this->request->getPost('description', 'string');
-      $stock       = $this->request->getPost('stock', 'int');
-      $price       = $this->request->getPost('price', 'int');
-      $is_active   = $this->request->getPost('is_active');
+      $id      = $this->request->getPost('id', 'string');
+      $product = Product::findFirst([
+         "id = :id:",
+         "bind" => ["id" => $id]
+      ]);
 
-      try {
-         $update = "UPDATE products SET category_id = :category_id, name = :name, description = :description, stock = :stock, price = :price, is_active = :is_active WHERE id = :id";
-         $this->db->execute($update, [
-            'category_id' => $category_id,
-            'name'        => $name,
-            'description' => $description,
-            'stock'       => $stock,
-            'price'       => $price,
-            'is_active'   => $is_active,
-            'id'          => $id
-         ]);
-
-         $this->flashSession->notice('Produk berhasil diperbarui.');
-      } catch (Exception $e) {
-         $this->flashSession->error($e->getMessage());
+      if (!$product) {
+         $this->flashSession->error('Produk tidak ditemukan.');
          return $this->response->redirect('product');
       }
 
-      return $this->response->redirect('product');
+      $product->category_id = $this->request->getPost('category_id', 'string');
+      $product->name        = $this->request->getPost('name', 'string');
+      $product->description = $this->request->getPost('description', 'string');
+      $product->stock       = $this->request->getPost('stock', 'int');
+      $product->price       = $this->request->getPost('price', 'int');
+      $product->is_active   = $this->request->getPost('is_active') === '1';
+
+      $ref_category_id = $this->request->getPost('ref_category_id', 'string');
+      $redirect_url    = 'product' . ($ref_category_id ? '?category_id=' . $ref_category_id : '');
+
+      if (!$product->save()) {
+         $messages = [];
+         foreach ($product->getMessages() as $message) {
+            $messages[] = $message->getMessage();
+         }
+         $this->flashSession->error(implode('<br>', $messages));
+         return $this->response->redirect($redirect_url);
+      }
+
+      $this->flashSession->notice('Produk berhasil diperbarui.');
+      return $this->response->redirect($redirect_url);
    }
 }

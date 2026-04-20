@@ -11,72 +11,32 @@
             </ol>
          </div>
       </div>
-   </div>   
+   </div>
 </div>
 
 <div class="content">
    <div class="container">
+      <div class="form-group row align-items-center">
+         <!-- FILTER (KIRI) -->
+         <div class="col-12 col-md-3 col-lg-2 mb-2 mb-md-0">
+            <select name="category" id="category" class="form-control form-control-sm" onchange="getData(this.value)">
+               <option value="All" {{ selected_category == 'All' or selected_category is empty ? 'selected' : '' }}>Semua Kategori</option>
+               {% for cat in categories %}
+               <option value="{{ cat.id }}" {{ selected_category == cat.id ? 'selected' : '' }}>{{ cat.name }}</option>
+               {% endfor %}
+            </select>
+         </div>
+
+         <!-- BUTTON (KANAN) -->
+         <div class="col-12 col-md-8 col-lg-10 text-md-right">
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAddProduct">
+               <i class="fas fa-plus"></i> Tambah Produk
+            </button>
+         </div>
+      </div>
       <div class="row">
-         <div class="col-lg-12">
-            <div class="card card-outline card-primary">
-               <div class="card-header">
-                  <h3 class="card-title">Daftar Produk</h3>
-                  <div class="card-tools">
-                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target="#modalAddProduct">
-                        <i class="fas fa-plus"></i> Tambah Produk
-                     </button>
-                  </div>
-               </div>
-               <div class="card-body">
-                  <div class="table-responsive">
-                     <table id="productTable" class="table table-sm table-bordered table-hover table-striped">
-                        <thead class="text-center">
-                           <tr>
-                              <th style="width: 40px;">No</th>
-                              <th>Nama Produk</th>
-                              <th>Kategori</th>
-                              <th>Stok</th>
-                              <th>Harga</th>
-                              <th>Status</th>
-                              <th style="width: 80px;">Aksi</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           {% for product in products %}
-                           <tr>
-                              <td class="text-center">{{ loop.index }}</td>
-                              <td class="text-left">{{ product.name }}</td>
-                              <td class="text-center">{{ product.category_name|default('-') }}</td>
-                              <td class="text-center">{{ product.stock }}</td>
-                              <td class="text-right">Rp {{ Helpers.number(product.price) }}</td>
-                              <td class="text-center">
-                                 {% if product.is_active %}
-                                 <span class="badge badge-success">Aktif</span>
-                                 {% else %}
-                                 <span class="badge badge-danger">Tidak Aktif</span>
-                                 {% endif %}
-                              </td>
-                              <td class="text-center">
-                                 <button type="button" class="btn btn-xs btn-warning btn-edit-product"
-                                    data-toggle="modal" data-target="#modalEditProduct"
-                                    data-id="{{ product.id }}"
-                                    data-name="{{ product.name }}"
-                                    data-description="{{ product.description }}"
-                                    data-stock="{{ product.stock }}"
-                                    data-price="{{ product.price }}"
-                                    data-category_id="{{ product.category_id }}"
-                                    data-is_active="{{ product.is_active ? '1' : '0' }}">
-                                    <i class="fas fa-edit"></i> Edit
-                                 </button>
-                              </td>
-                           </tr>
-                           {% endfor %}
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-            </div>
+         <div id="loadData" class="col-lg-12">
+            {% include "product/load.volt" %}
          </div>
       </div>
    </div>
@@ -95,6 +55,7 @@
                </button>
             </div>
             <div class="modal-body">
+               <input type="hidden" name="ref_category_id" value="{{ selected_category }}">
                <div class="form-row">
                   <div class="form-group col-md-6">
                      <label for="addCategoryId">Kategori</label>
@@ -107,8 +68,8 @@
                   </div>
                   <div class="form-group col-md-6">
                      <label for="addName">Nama Produk</label>
-                     <input type="text" id="addName" name="name" class="form-control form-control-sm" placeholder="Nama produk"
-                        required>
+                     <input type="text" id="addName" name="name" class="form-control form-control-sm"
+                        placeholder="Nama produk" required>
                   </div>
                </div>
                <div class="form-group">
@@ -119,11 +80,13 @@
                <div class="form-row">
                   <div class="form-group col-md-4">
                      <label for="addStock">Stok</label>
-                     <input type="number" id="addStock" name="stock" class="form-control form-control-sm" min="0" value="0" required>
+                     <input type="number" id="addStock" name="stock" class="form-control form-control-sm" min="0"
+                        value="0" required>
                   </div>
                   <div class="form-group col-md-4">
                      <label for="addPrice">Harga</label>
-                     <input type="number" id="addPrice" name="price" class="form-control form-control-sm" min="0" value="0" required>
+                     <input type="number" id="addPrice" name="price" class="form-control form-control-sm" min="0"
+                        value="0" required>
                   </div>
                   <div class="form-group col-md-4">
                      <label>Status</label>
@@ -157,6 +120,7 @@
             </div>
             <div class="modal-body">
                <input type="hidden" name="id" id="editProductId">
+               <input type="hidden" name="ref_category_id" value="{{ selected_category }}">
                <div class="form-row">
                   <div class="form-group col-md-6">
                      <label for="editCategoryId">Kategori</label>
@@ -169,8 +133,8 @@
                   </div>
                   <div class="form-group col-md-6">
                      <label for="editName">Nama Produk</label>
-                     <input type="text" id="editName" name="name" class="form-control form-control-sm" placeholder="Nama produk"
-                        required>
+                     <input type="text" id="editName" name="name" class="form-control form-control-sm"
+                        placeholder="Nama produk" required>
                   </div>
                </div>
                <div class="form-group">
@@ -181,11 +145,13 @@
                <div class="form-row">
                   <div class="form-group col-md-4">
                      <label for="editStock">Stok</label>
-                     <input type="number" id="editStock" name="stock" class="form-control form-control-sm" min="0" value="0" required>
+                     <input type="number" id="editStock" name="stock" class="form-control form-control-sm" min="0"
+                        value="0" required>
                   </div>
                   <div class="form-group col-md-4">
                      <label for="editPrice">Harga</label>
-                     <input type="number" id="editPrice" name="price" class="form-control form-control-sm" min="0" value="0" required>
+                     <input type="number" id="editPrice" name="price" class="form-control form-control-sm" min="0"
+                        value="0" required>
                   </div>
                   <div class="form-group col-md-4">
                      <label>Status</label>
@@ -207,21 +173,7 @@
 
 <script>
    $(function () {
-      $('#productTable').DataTable({
-         responsive: true,
-         autoWidth: false,
-         pageLength: 10,
-         lengthChange: true,
-         language: {
-            search: 'Cari:',
-            paginate: {
-               previous: '<i class="fas fa-angle-left"></i>',
-               next: '<i class="fas fa-angle-right"></i>'
-            }
-         }
-      });
-
-      $('.btn-edit-product').on('click', function () {
+      $(document).on('click', '.btn-edit-product', function () {
          var button = $(this);
          $('#editProductId').val(button.data('id'));
          $('#editCategoryId').val(button.data('category_id'));
@@ -231,5 +183,10 @@
          $('#editPrice').val(button.data('price'));
          $('#editIsActive').val(button.data('is_active'));
       });
+      
    });
+
+   function getData(id){
+      window.location.href = "{{ url('product') }}?category_id=" + id;
+   }
 </script>
