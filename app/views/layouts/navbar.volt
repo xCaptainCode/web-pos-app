@@ -3,14 +3,16 @@
 		<a href="{{ url('index') }}" class="navbar-brand">
 			{# <img src="{{ url('dist/img/store_24x24.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-2 p-1"
 				style="opacity: .8"> #}
-			<span class="brand-text font-weight-light">Captain POS</span>
+			<span class="brand-text font-weight-light">
+				<i class="fa-solid fa-store"></i>
+				Captain POS</span>
 		</a>
-
+	
 		<button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
 			aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-
+	
 		<div class="collapse navbar-collapse order-3" id="navbarCollapse">
 			<!-- Left navbar links -->
 			<ul class="navbar-nav">
@@ -22,30 +24,39 @@
 						<li><a href="{{ url('monitorminuman/index') }}" class="dropdown-item"><i class="fas fa-glass-martini"></i> Minuman </a></li>
 						<li><a href="{{ url('monitorgorengan/index') }}" class="dropdown-item"><i class="fas fa-bowl-food"></i> Tambahan & Snack </a></li>
 						{# <li class="dropdown-divider"></li> #}
-
+	
 						{# <li><a href="{{ url('infonota/index') }}" class="dropdown-item"><i class="fas fa-receipt"></i> Info Nota </a></li> #}
 					</ul>
 				</li>
 				{# cashier #}
 				<li class="nav-item">
-					<a href="{{ url('cashier') }}" class="nav-link">Cashier </a>
+					<a href="{{ url('cashier') }}" class="nav-link">
+						<i class="fa-solid fa-cash-register"></i>
+						Cashier 
+					</a>
 				</li>
 				{# product #}
 				<li class="nav-item">
-					<a href="{{ url('product') }}" class="nav-link">Products </a>
+					<a href="{{ url('product') }}" class="nav-link">
+						<i class="fa-solid fa-boxes-stacked"></i>
+						Products 
+					</a>
 				</li>
 				{# category #}
 				<li class="nav-item">
-					<a href="{{ url('category') }}" class="nav-link">Categories </a>
+					<a href="{{ url('category') }}" class="nav-link">
+						<i class="fa-solid fa-tags"></i>
+						Categories 
+					</a>
 				</li>
-				<li class="nav-item dropdown dropdown-hover" hidden>
-					<a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-						class="nav-link dropdown-toggle">Monitor Etalase</a>
-					<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-1 shadow mt-0 pt-0" style="left: 0px; right: inherit;">
-						<li><a href="{{ url('monitoretalase') }}" class="dropdown-item">Stock Peralatan </a></li>
-						<li><a href="{{ url('monitoretalase/riwayat') }}" class="dropdown-item">Riwayat Pemakaian </a></li>
-					</ul>
+				{% if session.role == 'ADMIN' %}
+				<li class="nav-item">
+					<a href="{{ url('user') }}" class="nav-link">
+						<i class="fa-solid fa-users-gear"></i>
+						Users
+					</a>
 				</li>
+				{% endif %}
 				<li class="nav-item dropdown dropdown-hover" hidden>
 					<a id="dropdownSubMenu3" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 						class="nav-link dropdown-toggle">Penjaga Etalase</a>
@@ -71,9 +82,9 @@
 						style="left: 0px; right: inherit;">
 						<li><a href="#" class="dropdown-item">Some action </a></li>
 						<li><a href="#" class="dropdown-item">Some other action</a></li>
-
+	
 						<li class="dropdown-divider"></li>
-
+	
 						<!-- Level two dropdown-->
 						<li class="dropdown-submenu dropdown-hover">
 							<a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -82,7 +93,7 @@
 								<li>
 									<a tabindex="-1" href="#" class="dropdown-item">level 2</a>
 								</li>
-
+	
 								<!-- Level three dropdown-->
 								<li class="dropdown-submenu">
 									<a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -93,7 +104,7 @@
 									</ul>
 								</li>
 								<!-- End Level three -->
-
+	
 								<li><a href="#" class="dropdown-item">level 2</a></li>
 								<li><a href="#" class="dropdown-item">level 2</a></li>
 							</ul>
@@ -102,7 +113,7 @@
 					</ul>
 				</li>
 			</ul>
-
+	
 			<!-- SEARCH FORM -->
 			<form class="form-inline ml-0 ml-md-3" hidden>
 				<div class="input-group input-group-sm">
@@ -115,7 +126,7 @@
 				</div>
 			</form>
 		</div>
-
+	
 		<!-- Right navbar links -->
 		<ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
 			<!-- Messages Dropdown Menu -->
@@ -233,7 +244,7 @@
 							{{ image("photos/M3.png", "class": "img-circle elevation-3", "alt": "User Avatar") }}
 						</div>
 						<div class="card-footer">
-							<a href="#" class="btn col-5 btn-default">Profile</a>
+							<a href="{{ url('profile') }}" class="btn col-5 btn-default">Profile</a>
 							<a href="{{ url('login/logout') }}" class="btn col-5 btn-danger float-right">Logout</a>
 						</div>
 						<!-- /.card-footer -->
