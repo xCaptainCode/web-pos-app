@@ -108,7 +108,6 @@
                               <input type="text" class="form-control form-control-sm" id="inputName" placeholder="Name"
                                  value="{{ session.role }}" readonly>
                            </div>
-                           {# Di dalam bagian form di profile/index.volt #}
                            <div class="form-group">
                               <label for="inputPassword"><i class="fas fa-key"></i> New Password</label>
                               <div class="input-group input-group-sm seamless-group">
