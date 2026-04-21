@@ -1,0 +1,94 @@
+.cashier-screen {
+   height: calc(100vh - 128px);
+   overflow: hidden;
+}
+
+.btn-confirm {
+   width: 100px;
+   margin-inline: 15px;
+}
+
+
+.cashier-screen .card-header {
+   background: #fff;
+}
+
+.cashier-search-wrap {
+   width: 290px;
+}
+
+.product-grid-wrap {
+   overflow-y: auto;
+}
+
+.product-card {
+   border: 1px solid #e9ecef;
+   transition: all 0.15s ease;
+}
+
+.product-card:hover:not(:disabled) {
+   border-color: #17a2b8;
+   transform: translateY(-1px);
+   box-shadow: 0 0.35rem 0.75rem rgba(23, 162, 184, 0.15);
+}
+
+.product-disabled {
+   opacity: 0.5;
+   cursor: not-allowed;
+}
+
+.cart-items-wrap {
+   overflow-y: auto;
+   min-height: 180px;
+}
+
+.cart-item {
+   border: 1px solid #e9ecef;
+   border-radius: 8px;
+   padding: 10px;
+   margin-bottom: 10px;
+}
+
+.qty-group {
+   display: inline-flex;
+   border: 1px solid #ced4da;
+   border-radius: 4px;
+   overflow: hidden;
+}
+
+.qty-group button {
+   border: 0;
+   background: #f8f9fa;
+   padding: 0 10px;
+}
+
+.qty-group input {
+   width: 44px;
+   border: 0;
+   text-align: center;
+}
+
+.btn-rounded {
+   border-radius: 15px;
+}
+
+.tool-tips:hover {
+   cursor:pointer;
+}
+
+@media (max-width: 991.98px) {
+   .cashier-screen {
+      height: auto;
+      overflow: visible;
+   }
+
+   .cashier-search-wrap {
+      width: 100%;
+      margin-top: 8px;
+   }
+
+   .product-grid-wrap,
+   .cart-items-wrap {
+      max-height: 420px;
+   }
+}
