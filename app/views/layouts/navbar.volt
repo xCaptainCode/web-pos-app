@@ -57,9 +57,9 @@
 				</li>
 				{% if session.role == 'ADMIN' %}
 				<li class="nav-item">
-					<a href="{{ url('report') }}" class="nav-link {{ request.getURI() == url('report') ? 'active' : '' }}">
-						<i class="fa-solid fa-chart-line"></i>
-						Laporan
+					<a href="{{ url('transaction') }}" class="nav-link {{ request.getURI() == url('transaction') ? 'active' : '' }}">
+						<i class="fa-solid fa-clock-rotate-left"></i>
+						Riwayat
 					</a>
 				</li>
 				<li class="nav-item dropdown dropdown-hover">

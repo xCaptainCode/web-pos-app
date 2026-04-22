@@ -73,9 +73,12 @@ class OrderController extends Controller {
                o.total,
                o.status,
                o.created_at,
-               COALESCE(u.name, '-') AS cashier_name
+               COALESCE(u.name, '-') AS cashier_name,
+               COALESCE(c.name, 'Walk-in Customer') AS customer_name,
+               c.phone AS customer_phone
             FROM orders o
             LEFT JOIN users u ON u.id = o.user_id
+            LEFT JOIN customers c ON c.id = o.customer_id
             WHERE o.id = :id
             LIMIT 1",
          Db::FETCH_ASSOC,
@@ -94,6 +97,7 @@ class OrderController extends Controller {
                COALESCE(p.name, '-') AS product_name,
                oi.quantity,
                oi.unit_price,
+               oi.discount,
                oi.subtotal
             FROM order_items oi
             LEFT JOIN products p ON p.id = oi.product_id
