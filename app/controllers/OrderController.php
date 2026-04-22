@@ -59,4 +59,53 @@ class OrderController extends Controller {
          'items' => json_decode(json_encode($items), false),
       ]);
    }
+   public function getDetailJsonAction($id) {
+      $this->view->disable();
+      $orderId = trim((string) $id);
+
+      $order = $this->db->fetchOne(
+         "SELECT
+               o.id,
+               o.order_no,
+               o.subtotal,
+               o.discount,
+               o.tax,
+               o.total,
+               o.status,
+               o.created_at,
+               COALESCE(u.name, '-') AS cashier_name
+            FROM orders o
+            LEFT JOIN users u ON u.id = o.user_id
+            WHERE o.id = :id
+            LIMIT 1",
+         Db::FETCH_ASSOC,
+         ['id' => $orderId]
+      );
+
+      if (!$order) {
+         return $this->response->setJsonContent([
+            'success' => false,
+            'message' => 'Order tidak ditemukan'
+         ]);
+      }
+
+      $items = $this->db->fetchAll(
+         "SELECT
+               COALESCE(p.name, '-') AS product_name,
+               oi.quantity,
+               oi.unit_price,
+               oi.subtotal
+            FROM order_items oi
+            LEFT JOIN products p ON p.id = oi.product_id
+            WHERE oi.order_id = :order_id",
+         Db::FETCH_ASSOC,
+         ['order_id' => $orderId]
+      );
+
+      return $this->response->setJsonContent([
+         'success' => true,
+         'order' => $order,
+         'items' => $items
+      ]);
+   }
 }

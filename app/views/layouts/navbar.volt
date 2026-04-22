@@ -30,48 +30,54 @@
 				</li>
 				{# cashier #}
 				<li class="nav-item">
-					<a href="{{ url('cashier') }}" class="nav-link">
+					<a href="{{ url('cashier') }}" class="nav-link {{ request.getURI() == url('cashier') ? 'active' : '' }}">
 						<i class="fa-solid fa-cash-register"></i>
 						Cashier 
 					</a>
 				</li>
 				{# product #}
 				<li class="nav-item">
-					<a href="{{ url('product') }}" class="nav-link">
+					<a href="{{ url('product') }}" class="nav-link {{ request.getURI() == url('product') ? 'active' : '' }}">
 						<i class="fa-solid fa-boxes-stacked"></i>
 						Products 
 					</a>
 				</li>
 				{# category #}
 				<li class="nav-item">
-					<a href="{{ url('category') }}" class="nav-link">
+					<a href="{{ url('category') }}" class="nav-link {{ request.getURI() == url('category') ? 'active' : '' }}">
 						<i class="fa-solid fa-tags"></i>
 						Categories 
 					</a>
 				</li>
-				{% if session.role == 'ADMIN' %}
 				<li class="nav-item">
-					<a href="{{ url('user') }}" class="nav-link">
-						<i class="fa-solid fa-users-gear"></i>
-						Users
+					<a href="{{ url('customer') }}" class="nav-link {{ request.getURI() == url('customer') ? 'active' : '' }}">
+						<i class="fa-solid fa-users"></i>
+						Customers 
 					</a>
 				</li>
-				{% endif %}
-				<li class="nav-item dropdown dropdown-hover" hidden>
+				{% if session.role == 'ADMIN' %}
+				<li class="nav-item">
+					<a href="{{ url('report') }}" class="nav-link {{ request.getURI() == url('report') ? 'active' : '' }}">
+						<i class="fa-solid fa-chart-line"></i>
+						Laporan
+					</a>
+				</li>
+				<li class="nav-item dropdown dropdown-hover">
 					<a id="dropdownSubMenu3" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-						class="nav-link dropdown-toggle">Penjaga Etalase</a>
+						class="nav-link dropdown-toggle"><i class="fa-solid fa-gears"></i> Settings</a>
 					<ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-1 shadow mt-0 pt-0" style="left: 0px; right: inherit;">
-						{# <li><a href="{{ url('penjagaetalase/pancing') }}" class="dropdown-item">Area Pancing </a></li> #}
-						<li><a href="{{ url('penjagaetalase/taman_dino') }}" class="dropdown-item">Area Taman Dino </a></li>
-						<li><a href="{{ url('penjagaetalase/aula_dino') }}" class="dropdown-item">Area Aula Dino </a></li>
-						<li><a href="{{ url('penjagaetalase/outbound') }}" class="dropdown-item">Area Outbound </a></li>
+						<li><a href="{{ url('user') }}" class="dropdown-item"><i class="fa-solid fa-user"></i> User Management </a></li>
+						<li><a href="{{ url('transaction') }}" class="dropdown-item"><i class="fa-solid fa-cash-register"></i> Transaksi </a></li>
+						<li><a href="{{ url('promotion') }}" class="dropdown-item"><i class="fa-solid fa-gift"></i> Promosi </a></li>
+						<li><a href="{{ url('Application') }}" class="dropdown-item"><i class="fa-solid fa-cog"></i> Aplikasi </a></li>
 						
 						<li class="dropdown-divider"></li>
 						
-						<li><a href="{{ url('penjagaetalase/penjaga') }}" class="dropdown-item">Plotting Penjaga </a></li>
+						<li><a href="{{ url('about') }}" class="dropdown-item"><i class="fa-solid fa-info-circle"></i> About </a></li>
 						
 					</ul>
 				</li>
+				{% endif %}
 				{# <li class="nav-item">
 					<a href="{{ url('monitorminuman/index') }}" class="nav-link">Monitor Minuman</a>
 				</li> #}
