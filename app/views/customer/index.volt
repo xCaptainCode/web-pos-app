@@ -20,7 +20,7 @@
       <div class="row form-group">
          <div class="col-12 col-md-12 col-lg-12 text-md-right">
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAddCategory">
-               <i class="fas fa-plus"></i> Tambah Category
+               <i class="fas fa-plus"></i> Tambah Customer
             </button>
          </div>
       </div>
@@ -36,42 +36,39 @@
                         <tr>
                            <th>No</th>
                            <th>Name</th>
-                           <th>Description</th>
-                           <th>Status</th>
-                           <th>Sort Order</th>
-                           <th>Total Product</th>
+                           <th>Phone</th>
+                           <th>Points</th>
+                           <th>Total Spent</th>
                            <th>Action</th>
                         </tr>
                      </thead>
                      <tbody>
-                        {% for category in categories %}
+                        {% for customer in customers %}
                         <tr>
                            <td class="text-center">{{ loop.index }}</td>
-                           <td class="text-left">{{ category.name }}</td>
-                           <td class="text-left">{{ category.description }}</td>
+                           <td class="text-left">{{ customer.name }}</td>
+                           <td class="text-left">{{ customer.phone }}</td>
                            <td class="text-center">
-                              {% if category.is_active == 'Y' %}
-                              <span class="badge badge-success">Aktif</span>
+                              {% if customer.loyality_points %}
+                              <span class="badge badge-success badge-pill">{{ customer.loyality_points }}</span>
                               {% else %}
-                              <span class="badge badge-danger">Tidak Aktif</span>
+                              <span class="badge badge-danger badge-pill">0</span>
                               {% endif %}
                            </td>
-                           <td class="text-center">{{ category.sort_order }}</td>
+                           <td class="text-right">Rp {{ Helpers.number(customer.total_spent) }}</td>
                            <td class="text-center">
-                              <span class="badge badge-info">{{ category.total_products }}</span>
-                           </td>
-                           <td class="text-center">
-                              <a href="#" data-toggle="modal" data-target="#modal-edit" data-id="{{ category.id }}"
-                                 data-name="{{ category.name }}" data-description="{{ category.description }}"
-                                 data-is_active="{{ category.is_active }}" data-sort_order="{{ category.sort_order }}"
-                                 class="btn btn-xs btn-warning">
+                              <!-- detail -->
+                              <a href="{{ url('customer/history/') ~ customer.id }}" class="btn btn-xs btn-info">
+                                 <i class="fas fa-info-circle"></i>
+                                 Detail
+                              </a>
+                              <!-- edit -->
+                              <a href="#" data-toggle="modal" data-target="#modal-edit" data-id="{{ customer.id }}"
+                                 data-name="{{ customer.name }}" data-phone="{{ customer.phone }}"
+                                 data-loyality_points="{{ customer.loyality_points }}"
+                                 data-total_spent="{{ customer.total_spent }}" class="btn btn-xs btn-warning">
                                  <i class="fas fa-edit"></i>
                                  Edit
-                              </a>
-                              <a href="#" data-toggle="modal" data-target="#modal-delete" data-id="{{ category.id }}"
-                                 data-name="{{ category.name }}" class="btn btn-xs btn-danger">
-                                 <i class="fas fa-trash-alt"></i>
-                                 Delete
                               </a>
                            </td>
                         </tr>
@@ -85,109 +82,96 @@
    </div>
 </div>
 
-<!-- modal add category -->
+<!-- modal add customer -->
 <div class="modal fade" id="modalAddCategory">
    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
          <div class="modal-header bg-primary">
-            <h4 class="modal-title">Tambah Category</h4>
+            <h4 class="modal-title">Tambah Customer</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
             </button>
          </div>
          <div class="modal-body">
-            <form id="formAdd" action="{{ url('category/store') }}" method="post">
+            <form id="formAdd" action="{{ url('customer/store') }}" method="post">
                <div class="form-group">
                   <label for="name">Name</label>
-                  <input type="text" name="name" id="name" class="form-control form-control-sm upper-case" required>
+                  <input type="text" name="name" id="name" class="form-control form-control-sm" required>
                   <span class="text-danger small nameError"></span>
                </div>
                <div class="form-group">
-                  <label for="description">Description</label>
-                  <textarea name="description" id="description" class="form-control form-control-sm"></textarea>
-               </div>
-               <div class="form-group">
-                  <label for="sort_order">Sort Order</label>
-                  <input type="number" name="sort_order" id="sort_order" class="form-control form-control-sm" required>
-               </div>
-               <div class="form-group">
-                  <label for="is_active">Status</label>
-                  <select name="is_active" id="is_active" class="form-control form-control-sm" required>
-                     <option value="Y">Aktif</option>
-                     <option value="N">Tidak Aktif</option>
-                  </select>
+                  <label for="phone">Phone</label>
+                  <input type="text" name="phone" id="phone" class="form-control form-control-sm" required>
+                  <span class="text-danger small phoneError"></span>
                </div>
             </form>
          </div>
          <div class="modal-footer justify-content-end">
             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-success btn-sm" form="formAdd"><i class="fas fa-save"></i> Tambah
-               Kategori</button>
+               Customer</button>
          </div>
       </div>
    </div>
 </div>
 
-<!-- modal edit category -->
+<!-- modal edit customer -->
 <div class="modal fade" id="modal-edit">
    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
          <div class="modal-header bg-warning">
-            <h4 class="modal-title">Edit Category</h4>
+            <h4 class="modal-title">Edit Customer</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
             </button>
          </div>
          <div class="modal-body">
-            <form id="formEdit" action="{{ url('category/update') }}" method="post">
+            <form id="formEdit" action="{{ url('customer/update') }}" method="post">
                <input type="hidden" name="id" id="edit_id">
                <div class="form-group">
                   <label for="edit_name">Name</label>
-                  <input type="text" name="name" id="edit_name" class="form-control form-control-sm upper-case" required>
+                  <input type="text" name="name" id="edit_name" class="form-control form-control-sm" required>
                   <span class="text-danger small editNameError"></span>
                </div>
                <div class="form-group">
-                  <label for="edit_description">Description</label>
-                  <textarea name="description" id="edit_description" class="form-control form-control-sm"></textarea>
+                  <label for="edit_phone">Phone</label>
+                  <input type="text" name="phone" id="edit_phone" class="form-control form-control-sm" required>
+                  <span class="text-danger small editPhoneError"></span>
                </div>
                <div class="form-group">
-                  <label for="edit_sort_order">Sort Order</label>
-                  <input type="number" name="sort_order" id="edit_sort_order" class="form-control form-control-sm"
-                     required>
+                  <label for="edit_loyality_points">Loyality Points</label>
+                  <input type="number" name="loyality_points" id="edit_loyality_points"  class="form-control form-control-sm">
                </div>
                <div class="form-group">
-                  <label for="edit_is_active">Status</label>
-                  <select name="is_active" id="edit_is_active" class="form-control form-control-sm" required>
-                     <option value="1">Aktif</option>
-                     <option value="">Tidak Aktif</option>
-                  </select>
+                  <label for="edit_total_spent">Total Spent</label> 
+                  <input type="number" name="total_spent" id="edit_total_spent" class="form-control form-control-sm">
                </div>
             </form>
          </div>
          <div class="modal-footer justify-content-end">
             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-primary btn-sm" form="formEdit"><i class="fas fa-save"></i> Perbarui
-               Kategori</button>
+               Customer</button>
          </div>
       </div>
    </div>
 </div>
 
-<!-- modal delete category -->
+<!-- modal delete customer -->
 <div class="modal fade" id="modal-delete">
    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
          <div class="modal-header bg-danger">
-            <h4 class="modal-title">Hapus Category</h4>
+            <h4 class="modal-title">Hapus Customer</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
             </button>
          </div>
          <div class="modal-body">
-            <form id="formDelete" action="{{ url('category/delete') }}" method="post">
+            <form id="formDelete" action="{{ url('customer/delete') }}" method="post">
                <input type="hidden" name="id" id="delete_id">
                <div class="form-group text-center">
-                  <label>Apakah anda yakin ingin menghapus category </label>
+                  <label>Apakah anda yakin ingin menghapus customer </label>
                   <div class="text-bold"><span id="delete_name" class="text-danger"></span>
                      ?</div>
                </div>
@@ -226,9 +210,9 @@
    $(document).on('click', '[data-target="#modal-edit"]', function () {
       $('#edit_id').val($(this).data('id'));
       $('#edit_name').val($(this).data('name'));
-      $('#edit_description').val($(this).data('description'));
-      $('#edit_sort_order').val($(this).data('sort_order'));
-      $('#edit_is_active').val($(this).data('is_active'));
+      $('#edit_phone').val($(this).data('phone'));
+      $('#edit_loyality_points').val($(this).data('loyality_points'));
+      $('#edit_total_spent').val($(this).data('total_spent'));
    });
 
    $(document).on('click', '[data-target="#modal-delete"]', function () {
