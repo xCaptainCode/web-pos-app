@@ -35,14 +35,14 @@
                         <th>Status</th>
                         <td>
                            <span class="badge {{ order.status == 'paid' ? 'badge-success' : 'badge-secondary' }}">
-                              {{ order.status }}
+                              {{ order.status|upper }}
                            </span>
                         </td>
                      </tr>
                      <tr>
                         <th>Waktu</th>
                         {# <td>{{ date('d-m-Y H:i:s', strtotime(order.created_at)) }}</td> #}
-                        <td>{{ order.created_at }}</td>
+                        <td>{{ Helpers.formatDateTime(order.created_at, 'l, d F Y H:i') }} WIB</td>
                      </tr>
                   </table>
                </div>

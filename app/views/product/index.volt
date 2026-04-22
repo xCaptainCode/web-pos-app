@@ -28,7 +28,7 @@
          </div>
 
          <!-- BUTTON (KANAN) -->
-         <div class="col-12 col-md-8 col-lg-10 text-md-right">
+         <div class="col-12 col-md-9 col-lg-10 text-md-right">
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAddProduct">
                <i class="fas fa-plus"></i> Tambah Produk
             </button>

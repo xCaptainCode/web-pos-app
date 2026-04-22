@@ -59,49 +59,51 @@
                   <h3 class="card-title">Daftar {{ title }}</h3>
                </div>
                <div class="card-body">
-                  <table id="example1" class="table table-sm table-bordered table-striped table-hover">
-                     <thead class="text-center">
-                        <tr>
-                           <th>No</th>
-                           <th>Name</th>
-                           <th>Username</th>
-                           <th>Role</th>
-                           <th>Status</th>
-                           <th>Action</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        {% for user in users %}
-                        <tr>
-                           <td class="text-center">{{ loop.index }}</td>
-                           <td class="text-left">{{ user.name }}</td>
-                           <td class="text-left">{{ user.username }}</td>
-                           <td class="text-center">{{ user.role }}</td>
-                           <td class="text-center">
-                              {% if user.is_active == 'Y' %}
-                              <span class="badge badge-success">Aktif</span>
-                              {% else %}
-                              <span class="badge badge-danger">Tidak Aktif</span>
-                              {% endif %}
-                           </td>
-                           <td class="text-center">
-                              <a href="#" data-toggle="modal" data-target="#modal-edit" data-id="{{ user.id }}"
-                                 data-name="{{ user.name }}" data-username="{{ user.username }}"
-                                 data-role="{{ user.role }}" data-is_active="{{ user.is_active }}"
-                                 class="btn btn-xs btn-warning">
-                                 <i class="fas fa-edit"></i>
-                                 Edit
-                              </a>
-                              <a href="#" data-toggle="modal" data-target="#modal-delete" data-id="{{ user.id }}"
-                                 data-name="{{ user.name }}" class="btn btn-xs btn-danger">
-                                 <i class="fas fa-trash-alt"></i>
-                                 Delete
-                              </a>
-                           </td>
-                        </tr>
-                        {% endfor %}
-                     </tbody>
-                  </table>
+                  <div class="table-responsive">
+                     <table id="example1" class="table table-sm table-bordered table-striped table-hover">
+                        <thead class="text-center">
+                           <tr>
+                              <th>No</th>
+                              <th>Name</th>
+                              <th>Username</th>
+                              <th>Role</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for user in users %}
+                           <tr>
+                              <td class="text-center">{{ loop.index }}</td>
+                              <td class="text-left">{{ user.name }}</td>
+                              <td class="text-left">{{ user.username }}</td>
+                              <td class="text-center">{{ user.role }}</td>
+                              <td class="text-center">
+                                 {% if user.is_active == 'Y' %}
+                                 <span class="badge badge-success">Aktif</span>
+                                 {% else %}
+                                 <span class="badge badge-danger">Tidak Aktif</span>
+                                 {% endif %}
+                              </td>
+                              <td class="text-center">
+                                 <a href="#" data-toggle="modal" data-target="#modal-edit" data-id="{{ user.id }}"
+                                    data-name="{{ user.name }}" data-username="{{ user.username }}"
+                                    data-role="{{ user.role }}" data-is_active="{{ user.is_active }}"
+                                    class="btn btn-xs btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                    Edit
+                                 </a>
+                                 <a href="#" data-toggle="modal" data-target="#modal-delete" data-id="{{ user.id }}"
+                                    data-name="{{ user.name }}" class="btn btn-xs btn-danger">
+                                    <i class="fas fa-trash-alt"></i>
+                                    Delete
+                                 </a>
+                              </td>
+                           </tr>
+                           {% endfor %}
+                        </tbody>
+                     </table>
+                  </div>
                </div>
             </div>
          </div>

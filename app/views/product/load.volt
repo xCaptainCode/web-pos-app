@@ -2,9 +2,9 @@
    <div class="card-header">
       <h3 class="card-title">Daftar Produk</h3>
       <div class="card-tools">
-         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAddProduct" hidden>
-            <i class="fas fa-plus"></i> Tambah Produk
-         </button>
+         {% if lowStockProducts %}
+         <span class="badge badge-danger badge-pill">{{ lowStockProducts }}</span> <span class="small">Produk dengan stok rendah  </span>
+         {% endif %}
       </div>
    </div>
    <div class="card-body">
@@ -23,7 +23,7 @@
             </thead>
             <tbody>
                {% for product in products %}
-               <tr>
+               <tr class="{% if product.stock <= 5 %}table-danger{% endif %}">
                   <td class="text-center">{{ loop.index }}</td>
                   <td class="text-left">{{ product.name }}</td>
                   <td class="text-center">{{ product.category_name|default('-') }}</td>

@@ -113,7 +113,7 @@ class IndexController extends Controller {
             WHERE COALESCE(p.is_active, true) = true
                AND COALESCE(p.stock, 0) <= :threshold
             ORDER BY p.stock ASC, p.name ASC
-            LIMIT 10",
+            LIMIT 5",
          Db::FETCH_ASSOC,
          ['threshold' => self::STOCK_ALERT_THRESHOLD]
       );

@@ -1,11 +1,14 @@
 <?php
 
+use Product;
 use Phalcon\Db;
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\View;
 
 class ProductController extends Controller
 {
+   const STOCK_ALERT_THRESHOLD = 5; 
+   
    public function indexAction()
    {
       $category_id = $this->request->getQuery("category_id", "string");
@@ -37,9 +40,19 @@ class ProductController extends Controller
          Db::FETCH_ASSOC
       );
 
+      $lowStockProducts = $this->db->fetchOne(
+         "SELECT count(*) as total
+            FROM products p
+            WHERE COALESCE(p.is_active, true) = true
+               AND COALESCE(p.stock, 0) <= :threshold",
+         Db::FETCH_ASSOC,
+         ['threshold' => self::STOCK_ALERT_THRESHOLD]
+      );
+
       $this->view->products = json_decode(json_encode($products), false);
       $this->view->categories = json_decode(json_encode($categories), false);
       $this->view->selected_category = $category_id;
+      $this->view->lowStockProducts = $lowStockProducts['total'];
    }
    public function loadAction()
    {

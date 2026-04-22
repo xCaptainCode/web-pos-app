@@ -23,6 +23,37 @@
       height: 300px;
       position: relative;
    }
+
+   .stat-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 15px;
+   }
+
+   .bg-soft-blue {
+      background-color: #d6e9ff;
+      color: #1c6ed5;
+   }
+
+   .bg-soft-green {
+      background-color: #c7eed8;
+      color: #1e7e34;
+   }
+
+   .bg-soft-red {
+      background-color: #f8d7da;
+      color: #dc3545;
+   }
+
+   .bg-soft-yellow {
+      background-color: #fff3cd;
+      color: #ff8c00;
+   }
 </style>
 
 <div class="content-header">
@@ -46,6 +77,72 @@
 
 <div class="content">
    <div class="row">
+      <div class="col-lg-3 col-md-6 col-12">
+         <!-- small card -->
+         <div class="card ">
+            <div class="row px-3 pt-3 no-gutters mb-0">
+               <div class="col-3">
+                  <div class="stat-icon bg-soft-green">
+                     <i class="fa-solid fa-money-bill-wave"></i>
+                  </div>
+               </div>
+               <div class="inner">
+                  <h3 class="text-bold">Rp {{ Helpers.number(totalRevenue) }}</h3>
+                  <p>Total Pendapatan</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-12">
+         <!-- small card -->
+         <div class="card ">
+            <div class="row px-3 pt-3 no-gutters mb-0">
+               <div class="col-3">
+                  <div class="stat-icon bg-soft-blue">
+                     <i class="fa-solid fa-shopping-bag"></i>
+                  </div>
+               </div>
+               <div class="inner">
+                  <h3 class="text-bold">{{ Helpers.number(totalOrders) }}</h3>
+                  <p>Total Orderan</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-12">
+         <!-- small card -->
+         <div class="card ">
+            <div class="row px-3 pt-3 no-gutters mb-0">
+               <div class="col-3">
+                  <div class="stat-icon bg-soft-yellow">
+                     <i class="fa-solid fa-users"></i>
+                  </div>
+               </div>
+               <div class="inner">
+                  <h3 class="text-bold">{{ Helpers.number(totalCustomers) }}</h3>
+                  <p>Jumlah Customer</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3 col-md-6 col-12">
+         <!-- small card -->
+         <div class="card ">
+            <div class="row px-3 pt-3 no-gutters mb-0">
+               <div class="col-3">
+                  <div class="stat-icon bg-soft-red">
+                     <i class="fas fa-tachometer-alt-average"></i>
+                  </div>
+               </div>
+               <div class="inner">
+                  <h3 class="text-bold">Rp {{ Helpers.number(avgOrder) }}</h3>
+                  <p>Rata-rata Nilai Order</p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row" hidden>
       <div class="col-lg-3 col-md-6 col-12">
          <!-- small card -->
          <div class="small-box bg-success">
@@ -134,7 +231,7 @@
       <div class="col-lg-5">
          <div class="card card-indigo">
             <div class="card-header">
-               <h3 class="card-title mb-0">Transaksi Terbaru</h3>
+               <h3 class="card-title mb-0"><i class="fa-solid fa-cash-register"></i> Transaksi Terbaru</h3>
             </div>
             <div class="card-body table-responsive p-0">
                <table class="table table-sm table-striped mb-0">
@@ -144,7 +241,7 @@
                         <th>Kasir</th>
                         <th>Customer</th>
                         <th class="text-right">Total</th>
-                        <th>Status</th>
+                        <th class="text-center">Status</th>
                         {# <th>Waktu</th> #}
                      </tr>
                   </thead>
@@ -156,9 +253,9 @@
                         <td>{{ trx.cashier_name }}</td>
                         <td>{{ trx.customer_name }}</td>
                         <td class="text-right">Rp {{ Helpers.number(trx.total) }}</td>
-                        <td>
+                        <td class="text-center">
                            <span class="badge {{ trx.status == 'paid' ? 'badge-success' : 'badge-secondary' }}">
-                              {{ trx.status }}
+                              {{ trx.status|upper }}
                            </span>
                         </td>
                         {# <td>{{ date('d-m-Y H:i', strtotime(trx.created_at)) }}</td> #}
@@ -176,9 +273,9 @@
          </div>
       </div>
       <div class="col-lg-4">
-         <div class="card card-orange">
-            <div class="card-header text-white">
-               <h3 class="card-title mb-0">Produk Terlaris</h3>
+         <div class="card card-info">
+            <div class="card-header">
+               <h3 class="card-title mb-0"><i class="fa fa-star" aria-hidden="true"></i> Produk Terlaris</h3>
             </div>
             <div class="card-body table-responsive p-0">
                <table class="table table-sm table-striped mb-0">
@@ -211,9 +308,9 @@
          </div>
       </div>
       <div class="col-lg-3">
-         <div class="card card-dark">
+         <div class="card card-danger">
             <div class="card-header">
-               <h3 class="card-title mb-0">Stok Hampir Habis (≤ {{ lowStockThreshold }})</h3>
+               <h3 class="card-title mb-0"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Stok Hampir Habis</h3>
             </div>
             <div class="card-body table-responsive p-0">
                <table class="table table-sm table-striped mb-0">
@@ -231,7 +328,7 @@
                         <td>{{ product.name }}</td>
                         <td>{{ product.category_name }}</td>
                         <td class="text-right">
-                           <span class="badge {{ product.stock <= 1 ? 'badge-danger' : 'badge-warning' }}">
+                           <span class="badge {{ product.stock <= 1 ? 'badge-danger' : 'badge-warning' }} badge-pill">
                               {{ product.stock }}
                            </span>
                         </td>
@@ -313,9 +410,9 @@
 
 <script>
    function detailTransaction(id) {
-      window.location="{{ url('order/detail/') }}" + id;
+      window.location = "{{ url('order/detail/') }}" + id;
    }
    function detailProduct() {
-      window.location = "{{ url('product') }}" ;
+      window.location = "{{ url('product') }}";
    }
 </script>

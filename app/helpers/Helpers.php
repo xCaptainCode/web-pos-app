@@ -4,6 +4,11 @@
  */
 class Helpers {
 
+   public static function formatDateTime($dateTime, $format) {
+      $date  = new DateTime($dateTime);
+      return $date->format($format);
+   }
+
    public static function showTgl($tgl, $format) {
       $date    = new DateTime($tgl);
       $tanggal = $date->format($format);
