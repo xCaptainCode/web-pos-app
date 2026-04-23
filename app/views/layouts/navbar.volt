@@ -60,16 +60,17 @@
 					<a href="{{ url('transaction') }}" class="nav-link {{ request.getURI() == url('transaction') ? 'active' : '' }}">
 						<i class="fa-solid fa-clock-rotate-left"></i>
 						Riwayat
+
 					</a>
 				</li>
 				<li class="nav-item dropdown dropdown-hover">
 					<a id="dropdownSubMenu3" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 						class="nav-link dropdown-toggle"><i class="fa-solid fa-gears"></i> Settings</a>
 					<ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-1 shadow mt-0 pt-0" style="left: 0px; right: inherit;">
-						<li><a href="{{ url('user') }}" class="dropdown-item"><i class="fa-solid fa-user"></i> User Management </a></li>
-						<li><a href="{{ url('transaction') }}" class="dropdown-item"><i class="fa-solid fa-cash-register"></i> Transaksi </a></li>
-						<li><a href="{{ url('promotion') }}" class="dropdown-item"><i class="fa-solid fa-gift"></i> Promosi </a></li>
-						<li><a href="{{ url('Application') }}" class="dropdown-item"><i class="fa-solid fa-cog"></i> Aplikasi </a></li>
+						<li><a href="{{ url('settings/user') }}" class="dropdown-item"><i class="fa-solid fa-user"></i> User Management </a></li>
+						<li><a href="{{ url('settings/transaction') }}" class="dropdown-item"><i class="fa-solid fa-cash-register"></i> Transaksi </a></li>
+						<li><a href="{{ url('settings/promotion') }}" class="dropdown-item"><i class="fa-solid fa-gift"></i> Promosi </a></li>
+						<li><a href="{{ url('settings/system') }}" class="dropdown-item"><i class="fa-solid fa-cog"></i> Aplikasi </a></li>
 						
 						<li class="dropdown-divider"></li>
 						
@@ -145,7 +146,7 @@
 					<a href="#" class="dropdown-item">
 						<!-- Message Start -->
 						<div class="media">
-							<img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+							<img src="{{ url('dist/img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
 							<div class="media-body">
 								<h3 class="dropdown-item-title">
 									Brad Diesel
@@ -161,7 +162,7 @@
 					<a href="#" class="dropdown-item">
 						<!-- Message Start -->
 						<div class="media">
-							<img src="../../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+							<img src="{{ url('dist/img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
 							<div class="media-body">
 								<h3 class="dropdown-item-title">
 									John Pierce
@@ -177,7 +178,7 @@
 					<a href="#" class="dropdown-item">
 						<!-- Message Start -->
 						<div class="media">
-							<img src="../../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+							<img src="{{ url('dist/img/user3-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
 							<div class="media-body">
 								<h3 class="dropdown-item-title">
 									Nora Silvester
