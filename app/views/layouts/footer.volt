@@ -58,6 +58,34 @@
 		document.body.scrollTop = 0; //untuk safari
 		window.scrollTo({ top: 0, behavior: "smooth" });  //untuk firefox, chrome, opera, IE6+
 	}
+
+	// Datatable
+   $("#dataTable").DataTable({
+      lengthChange: true,
+      searching: true,
+      ordering: true,
+      info: true,
+      autoWidth: false,
+      responsive: true,
+      paging: true,
+      pageLength: 10,
+      language: {
+         emptyTable: "Tidak ada data",
+         info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+         infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+         infoFiltered: "(filter dari _MAX_ total data)",
+         loadingRecords: "Memuat data...",
+         processing: "Memproses...",
+         search: "Cari:",
+         zeroRecords: "Tidak ada data yang cocok",
+         paginate: {
+            first: "<i class='fas fa-angle-double-left'></i>",
+            last: "<i class='fas fa-angle-double-right'></i>",
+            next: "<i class='fas fa-chevron-right'></i>",
+            previous: "<i class='fas fa-chevron-left'></i>"
+         }
+      }
+   });
 </script>
 
 <script>

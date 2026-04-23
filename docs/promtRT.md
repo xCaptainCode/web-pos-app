@@ -1,6 +1,6 @@
-riwayat transaksi
+## Riwayat Transaksi
 
-buatkan halaman riwayat transaksi berdasarkan data berikut:
+Buatkan halaman riwayat transaksi berdasarkan data berikut:
 
 pos_app=# select * from orders limit 5; 
                   id                  |               user_id                | customer_id |     order_no     | subtotal | discount |  tax  | total  | status |         created_at         
