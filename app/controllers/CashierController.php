@@ -4,7 +4,7 @@ use Phalcon\Db;
 use Phalcon\Mvc\Controller;
 
 class CashierController extends Controller {
-   const DEFAULT_TAX_PERCENT = 0;
+   const DEFAULT_TAX_PERCENT = 11;
 
    public function indexAction() {
       $products = $this->db->fetchAll(
@@ -57,7 +57,7 @@ class CashierController extends Controller {
       $this->view->categories        = json_decode(json_encode($categories), false);
       $this->view->customers         = json_decode(json_encode($customers), false);
       $this->view->discounts         = json_decode(json_encode($discounts), false);
-      $this->view->defaultTaxPercent = self::DEFAULT_TAX_PERCENT;
+      $this->view->defaultTaxPercent = Setting::getVal('tax_percentage', 11);
    }
 
    public function checkoutAction() {
@@ -282,8 +282,12 @@ class CashierController extends Controller {
    }
 
    private function generateOrderNo($db) {
-      $dateCode = date('Ymd');
-      $prefix   = 'TRX-' . $dateCode . '-';
+      $format = Setting::getVal('order_no_format', 'TRX-{Ymd}-{03d}');
+      
+      $datePart = date('Ymd');
+      // Extract prefix from format (everything before the serial part)
+      $prefixFormat = str_replace('{Ymd}', $datePart, $format);
+      $prefix = explode('{', $prefixFormat)[0];
 
       $row = $db->fetchOne(
          "SELECT COUNT(*)::int AS total
@@ -294,7 +298,13 @@ class CashierController extends Controller {
       );
 
       $next = ((int) $row['total']) + 1;
+      
+      // Handle the serial part format like {03d}
+      preg_match('/\{(\d+d)\}/', $format, $matches);
+      $serialFormat = $matches[1] ?? '03d';
+      
+      $orderNo = str_replace(['{Ymd}', '{' . $serialFormat . '}'], [$datePart, sprintf('%' . $serialFormat, $next)], $format);
 
-      return sprintf('%s%03d', $prefix, $next);
+      return $orderNo;
    }
 }

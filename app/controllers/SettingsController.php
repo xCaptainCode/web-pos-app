@@ -160,4 +160,49 @@ class SettingsController extends Controller
       }
       return $this->response->redirect('settings/promotion');
    }
+
+   /**
+    * System Settings
+    */   
+   public function systemAction()
+   {
+      $this->view->setVar("title", "System Settings");
+      
+      $settings = Setting::find();
+      $config = [];
+      foreach ($settings as $s) {
+         $config[$s->key] = $s->value;
+      }
+      
+      $this->view->config = $config;
+   }
+
+   public function systemSaveAction()
+   {
+      $this->view->disable();
+      if ($this->request->isPost()) {
+         $configs = $this->request->getPost('config');
+         
+         $success = true;
+         foreach ($configs as $key => $value) {
+            $setting = Setting::findFirstByKey($key);
+            if (!$setting) {
+               $setting = new Setting();
+               $setting->key = $key;
+            }
+            $setting->value = $value;
+            if (!$setting->save()) {
+               $success = false;
+               foreach ($setting->getMessages() as $message) {
+                  $this->flashSession->error($message->getMessage());
+               }
+            }
+         }
+         
+         if ($success) {
+            $this->flashSession->notice("Konfigurasi sistem berhasil diperbarui");
+         }
+      }
+      return $this->response->redirect('settings/system');
+   }
 }

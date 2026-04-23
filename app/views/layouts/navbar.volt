@@ -5,7 +5,7 @@
 				style="opacity: .8"> #}
 			<span class="brand-text font-weight-light">
 				<i class="fa-solid fa-store"></i>
-				Captain POS</span>
+				{{ get_setting('store_name', 'Captain POS') }}</span>
 		</a>
 	
 		<button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
