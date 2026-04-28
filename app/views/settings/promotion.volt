@@ -68,32 +68,29 @@
                               <td class="text-center">{{ promo.valid_from }}</td>
                               <td class="text-center">{{ promo.valid_until }}</td>
                               <td class="text-center">
-                                 {% if now >= promo.valid_from and now <= promo.valid_until %}
-                                 <span class="badge badge-success">Aktif</span>
-                                 {% elseif now < promo.valid_from %}
-                                 <span class="badge badge-warning">Mendatang</span>
-                                 {% else %}
-                                 <span class="badge badge-danger">Kedaluwarsa</span>
-                                 {% endif %}
+                                 {% if now >= promo.valid_from and now <= promo.valid_until %} <span
+                                    class="badge badge-success">Aktif</span>
+                                    {% elseif now < promo.valid_from %} <span class="badge badge-warning">
+                                       Mendatang</span>
+                                       {% else %}
+                                       <span class="badge badge-danger">Kedaluwarsa</span>
+                                       {% endif %}
                               </td>
                               <td class="text-center">
-                                 <a href="#" data-toggle="modal" data-target="#modal-edit" 
-                                    data-id="{{ promo.id }}"
-                                    data-name="{{ promo.name }}" 
-                                    data-type="{{ promo.type }}"
-                                    data-value="{{ promo.value }}"
-                                    data-valid_from="{{ promo.valid_from }}"
-                                    data-valid_until="{{ promo.valid_until }}"
-                                    class="btn btn-xs btn-warning">
-                                    <i class="fas fa-edit"></i>
-                                    Edit
-                                 </a>
-                                 <a href="#" data-toggle="modal" data-target="#modal-delete" 
-                                    data-id="{{ promo.id }}"
-                                    data-name="{{ promo.name }}" class="btn btn-xs btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                    Delete
-                                 </a>
+                                 <div class="btn-group">
+                                    <a href="#" data-toggle="modal" data-target="#modal-edit" data-id="{{ promo.id }}"
+                                       data-name="{{ promo.name }}" data-type="{{ promo.type }}"
+                                       data-value="{{ promo.value }}" data-valid_from="{{ promo.valid_from }}"
+                                       data-valid_until="{{ promo.valid_until }}" class="btn btn-xs btn-warning">
+                                       <i class="fas fa-edit"></i>
+                                       Edit
+                                    </a>
+                                    <a href="#" data-toggle="modal" data-target="#modal-delete" data-id="{{ promo.id }}"
+                                       data-name="{{ promo.name }}" class="btn btn-xs btn-danger">
+                                       <i class="fas fa-trash-alt"></i>
+                                       Delete
+                                    </a>
+                                 </div>
                               </td>
                            </tr>
                            {% endfor %}
@@ -144,13 +141,15 @@
                   <div class="col-md-6">
                      <div class="form-group">
                         <label for="valid_from">Berlaku Dari</label>
-                        <input type="date" name="valid_from" id="valid_from" class="form-control form-control-sm" required>
+                        <input type="date" name="valid_from" id="valid_from" class="form-control form-control-sm"
+                           required>
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-group">
                         <label for="valid_until">Hingga</label>
-                        <input type="date" name="valid_until" id="valid_until" class="form-control form-control-sm" required>
+                        <input type="date" name="valid_until" id="valid_until" class="form-control form-control-sm"
+                           required>
                      </div>
                   </div>
                </div>
@@ -158,7 +157,8 @@
          </div>
          <div class="modal-footer justify-content-end">
             <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-sm btn-primary" form="formAdd"><i class="fas fa-save"></i> Save</button>
+            <button type="submit" class="btn btn-sm btn-primary" form="formAdd"><i class="fas fa-save"></i>
+               Save</button>
          </div>
       </div>
    </div>
@@ -202,13 +202,15 @@
                   <div class="col-md-6">
                      <div class="form-group">
                         <label for="valid_from">Berlaku Dari</label>
-                        <input type="date" name="valid_from" id="valid_from" class="form-control form-control-sm" required>
+                        <input type="date" name="valid_from" id="valid_from" class="form-control form-control-sm"
+                           required>
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-group">
                         <label for="valid_until">Hingga</label>
-                        <input type="date" name="valid_until" id="valid_until" class="form-control form-control-sm" required>
+                        <input type="date" name="valid_until" id="valid_until" class="form-control form-control-sm"
+                           required>
                      </div>
                   </div>
                </div>
@@ -216,7 +218,8 @@
          </div>
          <div class="modal-footer justify-content-end">
             <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-sm btn-primary" form="formEdit"><i class="fas fa-save"></i> Save changes</button>
+            <button type="submit" class="btn btn-sm btn-primary" form="formEdit"><i class="fas fa-save"></i> Save
+               changes</button>
          </div>
       </div>
    </div>
@@ -233,13 +236,20 @@
             </button>
          </div>
          <div class="modal-body text-center">
-            <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
-            <p>Apakah Anda yakin ingin menghapus promo <strong id="delete-promo-name"></strong>?</p>
-            <p class="text-muted small">Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="d-flex align-items-center justify-content-center flex-column">
+               <div class="bg-danger d-flex align-items-center justify-content-center rounded-circle mb-3"
+                  style="width: 100px; height: 100px;">
+                  <i class="fas fa-trash-alt fa-4x text-white"></i>
+               </div>
+               <p>Apakah Anda yakin ingin menghapus promo <br> <strong id="delete-promo-name"></strong>?</p>
+               <div class="bg-danger p-2 rounded shadow-sm">
+                  <p class="text-white small mb-0">Data yang sudah terhapus tidak dapat dikembalikan!</p>
+               </div>
+            </div>
          </div>
          <div class="modal-footer justify-content-around">
             <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Batal</button>
-            <a href="#" id="btn-confirm-delete" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
+            <a href="#" id="btn-confirm-delete" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Ya, Hapus!</a>
          </div>
       </div>
    </div>
@@ -247,7 +257,7 @@
 
 <script>
    $(document).ready(function () {
-      
+
       // Edit modal population
       $('#modal-edit').on('show.bs.modal', function (event) {
          var button = $(event.relatedTarget);

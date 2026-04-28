@@ -242,7 +242,6 @@
                         <th>Customer</th>
                         <th class="text-right">Total</th>
                         <th class="text-center">Status</th>
-                        {# <th>Waktu</th> #}
                      </tr>
                   </thead>
                   <tbody>
@@ -258,8 +257,6 @@
                               {{ trx.status|upper }}
                            </span>
                         </td>
-                        {# <td>{{ date('d-m-Y H:i', strtotime(trx.created_at)) }}</td> #}
-                        {# <td>{{ trx.created_at }}</td> #}
                      </tr>
                      {% endfor %}
                      {% else %}

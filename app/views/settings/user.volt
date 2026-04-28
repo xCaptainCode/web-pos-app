@@ -86,18 +86,20 @@
                                  {% endif %}
                               </td>
                               <td class="text-center">
-                                 <a href="#" data-toggle="modal" data-target="#modal-edit" data-id="{{ user.id }}"
-                                    data-name="{{ user.name }}" data-username="{{ user.username }}"
-                                    data-role="{{ user.role }}" data-is_active="{{ user.is_active }}"
-                                    class="btn btn-xs btn-warning">
-                                    <i class="fas fa-edit"></i>
-                                    Edit
-                                 </a>
-                                 <a href="#" data-toggle="modal" data-target="#modal-delete" data-id="{{ user.id }}"
-                                    data-name="{{ user.name }}" class="btn btn-xs btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                    Delete
-                                 </a>
+                                 <div class="btn-group">
+                                    <a href="#" data-toggle="modal" data-target="#modal-edit" data-id="{{ user.id }}"
+                                       data-name="{{ user.name }}" data-username="{{ user.username }}"
+                                       data-role="{{ user.role }}" data-is_active="{{ user.is_active }}"
+                                       class="btn btn-xs btn-warning">
+                                       <i class="fas fa-edit"></i>
+                                       Edit
+                                    </a>
+                                    <a href="#" data-toggle="modal" data-target="#modal-delete" data-id="{{ user.id }}"
+                                       data-name="{{ user.name }}" class="btn btn-xs btn-danger">
+                                       <i class="fas fa-trash-alt"></i>
+                                       Delete
+                                    </a>
+                                 </div>
                               </td>
                            </tr>
                            {% endfor %}
@@ -163,6 +165,7 @@
    </div>
 </div>
 
+<!-- modal edit user -->
 <div class="modal fade" id="modal-edit">
    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -232,13 +235,20 @@
             </button>
          </div>
          <div class="modal-body text-center">
-            <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
-            <p>Apakah Anda yakin ingin menghapus user <strong id="delete-user-name"></strong>?</p>
-            <p class="text-muted small">Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="d-flex align-items-center justify-content-center flex-column">
+               <div class="bg-danger d-flex align-items-center justify-content-center rounded-circle mb-3"
+                  style="width: 100px; height: 100px;">
+                  <i class="fas fa-trash-alt fa-4x text-white"></i>
+               </div>
+               <p>Apakah Anda yakin ingin menghapus user <br> <strong id="delete-user-name"></strong>?</p>
+               <div class="bg-danger p-2 rounded shadow-sm">
+                  <p class="text-white small mb-0">Data yang sudah terhapus tidak dapat dikembalikan!</p>
+               </div>
+            </div>
          </div>
          <div class="modal-footer justify-content-around">
             <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Batal</button>
-            <a href="#" id="btn-confirm-delete" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</a>
+            <a href="#" id="btn-confirm-delete" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Ya, Hapus!</a>
          </div>
       </div>
    </div>

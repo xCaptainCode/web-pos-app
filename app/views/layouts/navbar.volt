@@ -67,8 +67,7 @@
 					<a id="dropdownSubMenu3" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 						class="nav-link dropdown-toggle"><i class="fa-solid fa-gears"></i> Settings</a>
 					<ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-1 shadow mt-0 pt-0" style="left: 0px; right: inherit;">
-						<li><a href="{{ url('settings/user') }}" class="dropdown-item"><i class="fa-solid fa-user"></i> User Management </a></li>
-						<li><a href="{{ url('settings/transaction') }}" class="dropdown-item"><i class="fa-solid fa-cash-register"></i> Transaksi </a></li>
+						<li><a href="{{ url('settings/user') }}" class="dropdown-item"><i class="fa-solid fa-user"></i> User </a></li>
 						<li><a href="{{ url('settings/promotion') }}" class="dropdown-item"><i class="fa-solid fa-gift"></i> Promosi </a></li>
 						<li><a href="{{ url('settings/system') }}" class="dropdown-item"><i class="fa-solid fa-cog"></i> Aplikasi </a></li>
 						

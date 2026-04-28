@@ -1,10 +1,7 @@
 <footer class="main-footer">
-	<i class="text-center small mr-1">Copyright &copy; 2025 </i>
+	<i class="text-center small mr-1">Copyright &copy; 2025 captainwannn.web.id</i>
 	<!-- All rights reserved. -->
 	<div class="float-right d-none d-sm-inline-block small">
-		<i class="fa-solid fa-earth-asia"></i> <span class=""><a href="https://captainwannn.web.id">captainwannn.web.id</a></span>  
-		<i class="fa-brands fa-github"></i> <span class=""> <a href="#">xCaptainCode</a></span>
-		<i class="fa-solid fa-envelope"></i> <span class=""> <a href="#">wannncaptain@gmail.com</a></span>
 		<b>Version</b> 1.0.0
 	</div>
 </footer>
@@ -71,9 +68,9 @@
       pageLength: 10,
       language: {
          emptyTable: "Tidak ada data",
-         info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-         infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
-         infoFiltered: "(filter dari _MAX_ total data)",
+         // info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+         // infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+         // infoFiltered: "(filter dari _MAX_ total data)",
          loadingRecords: "Memuat data...",
          processing: "Memproses...",
          search: "Cari:",

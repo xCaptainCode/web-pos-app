@@ -20,12 +20,12 @@
 		{# <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> #}
 	<!-- remix icon -->
 		{# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"> #}
-	{{ stylesheet_link("plugins\RemixIcon_Fonts_v4.3.0\fonts\remixicon.css") }}
+	{{ stylesheet_link("plugins/RemixIcon_Fonts_v4.3.0/fonts/remixicon.css") }}
 
 	<!-- DataTables -->
 	{{ stylesheet_link("plugins/datatables-bs4/css/dataTables.bootstrap4.min.css") }}
 	{{ stylesheet_link("plugins/datatables-responsive/css/responsive.bootstrap4.min.css") }}
-
+	{{ stylesheet_link("plugins/datatables-buttons/css/buttons.bootstrap4.min.css") }}
 	<!-- Tempusdominus Bbootstrap 4 -->
 	{{ stylesheet_link("plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css") }}
 	<!-- iCheck -->
@@ -90,8 +90,8 @@
 	{{ stylesheet_link("plugins/select2/css/select2.min.css") }}
 	{{ javascript_include("plugins/select2/js/select2.full.min.js") }}
 	
-	{{ javascript_include("plugins/select2-bootstrap4-theme/select2-bootstrap4.css") }}
-	{{ javascript_include("plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css") }}
+	{{ stylesheet_link("plugins/select2-bootstrap4-theme/select2-bootstrap4.css") }}
+	{{ stylesheet_link("plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css") }}
 	<!-- DataTables -->
 	{{ javascript_include("plugins/datatables/jquery.dataTables.min.js") }}
 	{{ javascript_include("plugins/datatables-bs4/js/dataTables.bootstrap4.min.js") }}
@@ -104,7 +104,7 @@
 	{{ javascript_include("plugins/jszip/jszip.min.js") }}
 	{{ javascript_include("plugins/pdfmake/pdfmake.min.js") }}
 	{{ javascript_include("plugins/pdfmake/vfs_fonts.js") }}
-	{# {{ javascript_include("plugins/datatables-buttons/js/button.colVis.min.js") }} #}
+	{{ javascript_include("plugins/datatables-buttons/js/buttons.colVis.min.js") }}
 
 	<!-- chart -->
 	{{ javascript_include("plugins/chart.js/Chart.min.js") }}
@@ -115,6 +115,8 @@
 	{{ javascript_include("plugins/jquery-knob/jquery.knob.min.js") }}
 	<!-- AdminLTE App -->
 	{{ javascript_include("dist/js/adminlte.js") }}
+	<!-- filterizr -->
+	{{ javascript_include("plugins/filterizr/jquery.filterizr.min.js") }}
 	<!-- phospor icon -->
 	{# <script src="https://unpkg.com/@phosphor-icons/web"></script> #}
 	<!-- html2pdf -->
@@ -200,6 +202,10 @@
   }
 	.underline:hover {
     text-decoration: underline;
+  }
+
+  .text-number {
+	font-family: Oxanium;
   }
 </style>
 

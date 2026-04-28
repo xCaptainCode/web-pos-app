@@ -47,29 +47,31 @@
                         <tr>
                            <td class="text-center">{{ loop.index }}</td>
                            <td class="text-left">{{ customer.name }}</td>
-                           <td class="text-left">{{ customer.phone }}</td>
+                           <td class="text-left text-number">{{ customer.phone }}</td>
                            <td class="text-center">
                               {% if customer.loyality_points %}
-                              <span class="badge badge-success badge-pill">{{ customer.loyality_points }}</span>
+                              <span class="badge badge-default bg-indigo badge-pill">{{ customer.loyality_points }}</span>
                               {% else %}
                               <span class="badge badge-danger badge-pill">0</span>
                               {% endif %}
                            </td>
-                           <td class="text-right">Rp {{ Helpers.number(customer.total_spent) }}</td>
+                           <td class="text-right text-number">Rp {{ Helpers.number(customer.total_spent) }}</td>
                            <td class="text-center">
-                              <!-- detail -->
-                              <a href="{{ url('customer/history/') ~ customer.id }}" class="btn btn-xs btn-info">
-                                 <i class="fas fa-info-circle"></i>
-                                 Detail
-                              </a>
-                              <!-- edit -->
-                              <a href="#" data-toggle="modal" data-target="#modal-edit" data-id="{{ customer.id }}"
-                                 data-name="{{ customer.name }}" data-phone="{{ customer.phone }}"
-                                 data-loyality_points="{{ customer.loyality_points }}"
-                                 data-total_spent="{{ customer.total_spent }}" class="btn btn-xs btn-warning">
-                                 <i class="fas fa-edit"></i>
-                                 Edit
-                              </a>
+                              <div class="btn-group">
+                                 <!-- detail -->
+                                 <a href="{{ url('customer/history/') ~ customer.id }}" class="btn btn-xs btn-info" title="Detail">
+                                    <i class="fas fa-info-circle"></i>
+                                    Detail
+                                 </a>
+                                 <!-- edit -->
+                                 <a href="#" data-toggle="modal" data-target="#modal-edit" data-id="{{ customer.id }}"
+                                    data-name="{{ customer.name }}" data-phone="{{ customer.phone }}"
+                                    data-loyality_points="{{ customer.loyality_points }}"
+                                    data-total_spent="{{ customer.total_spent }}" class="btn btn-xs btn-warning" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                    Edit
+                                 </a>
+                              </div>
                            </td>
                         </tr>
                         {% endfor %}
@@ -179,7 +181,7 @@
          </div>
          <div class="modal-footer justify-content-around">
             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-danger btn-sm" form="formDelete"><i class="fas fa-trash-alt"></i> Hapus</button>
+            <button type="submit" class="btn btn-danger btn-sm" form="formDelete"><i class="fas fa-trash"></i> Ya, Hapus!</button>
          </div>
       </div>
    </div>

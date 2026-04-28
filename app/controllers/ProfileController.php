@@ -2,12 +2,22 @@
 
 use User;
 use Phalcon\Mvc\Controller;
+use Phalcon\Db;
 
 class ProfileController extends Controller
 {
    public function indexAction()
    {
       $this->view->pick('profile/index');
+
+      $user_id = $this->session->get('id');
+
+      $sql = "SELECT count(*) as qty, sum(total) as total FROM orders WHERE user_id = :uid;";
+      $total = $this->db->fetchOne($sql, Db::FETCH_ASSOC,['uid' => $user_id]);
+      $this->view->qty_order = $total['qty'];
+      $this->view->total_order = $total['total'];
+
+      
    }
 
    public function updateAction()

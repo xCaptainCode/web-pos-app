@@ -33,7 +33,7 @@
                            </tr>
                            <tr>
                               <th>Telepon</th>
-                              <td>: {{ customer.phone }}</td>
+                              <td class="text-number">: {{ customer.phone }}</td>
                            </tr>
                         </table>
                      </div>
@@ -45,7 +45,7 @@
                            </tr>
                            <tr>
                               <th>Total Spent</th>
-                              <td>: <span class="text-bold">Rp {{ Helpers.number(customer.total_spent) }}</span></td>
+                              <td>: <span class="text-bold text-number">Rp {{ Helpers.number(customer.total_spent) }}</span></td>
                            </tr>
                         </table>
                      </div>
@@ -79,9 +79,9 @@
                         {% for tr in transactions %}
                         <tr class="clickable-row" data-id="{{ tr.id }}" style="cursor: pointer;">
                            <td class="text-left">{{ loop.index }}</td>
-                           <td class="text-left">{{ tr.order_no }}</td>
+                           <td class="text-left text-number">{{ tr.order_no }}</td>
                            <td class="text-left">{{ tr.cashier_name }}</td>
-                           <td class="text-right">Rp {{ Helpers.number(tr.total) }}</td>
+                           <td class="text-right text-number">Rp {{ Helpers.number(tr.total) }}</td>
                            <td class="text-center">
                               {% if tr.status == 'paid' %}
                                  <span class="badge badge-success">{{ tr.status|upper }}</span>
@@ -91,19 +91,19 @@
                                  <span class="badge badge-danger">{{ tr.status|upper }}</span>
                               {% endif %}
                            </td>
-                           <td class="text-left">{{ Helpers.formatDateTime(tr.created_at, 'l, d F Y H:i') }}</td>
+                           <td class="text-left">{{ Helpers.formatDateTime(tr.created_at, 'l, d M Y H:i') }}</td>
                         </tr>
                         {% set total += tr.total %}
                         {% endfor %}
                      </tbody>
-                     <tfoot class="text-right">
+                     {# <tfoot class="text-right" hidden>
                         <tr>
                            <th colspan="3">Total</th>
-                           <th>Rp {{ Helpers.number(total) }}</th>
+                           <th><h3 class="text-number">Rp {{ Helpers.number(total) }}</h3></th>
                            <th></th>
                            <th></th>
                         </tr>
-                     </tfoot>
+                     </tfoot> #}
                   </table>
                </div>
             </div>
@@ -144,11 +144,17 @@
          "ordering": true,
          "info": true,
          "autoWidth": false,
-         "responsive": true,
-         "order": [[1, "desc"]]
+         "order": [[1, "desc"]],
+         language: {
+            search: 'Cari:',
+            paginate: {
+               previous: '<i class="fas fa-angle-left"></i>',
+               next: '<i class="fas fa-angle-right"></i>'
+            }
+         }
       });
 
-      $('.clickable-row').on('click', function() {
+      $('#tableHistory').on('click', '.clickable-row', function() {
          var orderId = $(this).data('id');
          var orderNo = $(this).find('td:eq(1)').text();
          
@@ -173,7 +179,7 @@
                   var html = '<div class="row mb-3">' +
                               '  <div class="col-sm-6">' +
                               '     <strong>Kasir:</strong> ' + order.cashier_name + '<br>' +
-                              '     <strong>Waktu:</strong> ' + order.created_at +
+                              '     <strong>Waktu:</strong> ' + "{{Helpers.formatDateTime(order.created_at, 'l, d M Y H:i')}}" +
                               '  </div>' +
                               '  <div class="col-sm-6 text-right">' +
                               '     <strong>Status:</strong> <span class="badge ' + statusClass + '">' + order.status.toUpperCase() + '</span>' +

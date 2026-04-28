@@ -61,18 +61,21 @@
                               <span class="badge badge-info">{{ category.total_products }}</span>
                            </td>
                            <td class="text-center">
-                              <a href="#" data-toggle="modal" data-target="#modal-edit" data-id="{{ category.id }}"
-                                 data-name="{{ category.name }}" data-description="{{ category.description }}"
-                                 data-is_active="{{ category.is_active }}" data-sort_order="{{ category.sort_order }}"
-                                 class="btn btn-xs btn-warning">
-                                 <i class="fas fa-edit"></i>
-                                 Edit
-                              </a>
-                              <a href="#" data-toggle="modal" data-target="#modal-delete" data-id="{{ category.id }}"
-                                 data-name="{{ category.name }}" class="btn btn-xs btn-danger">
-                                 <i class="fas fa-trash-alt"></i>
-                                 Delete
-                              </a>
+                              <div class="btn-group">
+                                 <a href="#" data-toggle="modal" data-target="#modal-edit" data-id="{{ category.id }}"
+                                    data-name="{{ category.name }}" data-description="{{ category.description }}"
+                                    data-is_active="{{ category.is_active }}"
+                                    data-sort_order="{{ category.sort_order }}" class="btn btn-xs btn-warning"
+                                    title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                    Edit
+                                 </a>
+                                 <a href="#" data-toggle="modal" data-target="#modal-delete" data-id="{{ category.id }}"
+                                    data-name="{{ category.name }}" class="btn btn-xs btn-danger" title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                    Delete
+                                 </a>
+                              </div>
                            </td>
                         </tr>
                         {% endfor %}
@@ -143,7 +146,8 @@
                <input type="hidden" name="id" id="edit_id">
                <div class="form-group">
                   <label for="edit_name">Name</label>
-                  <input type="text" name="name" id="edit_name" class="form-control form-control-sm upper-case" required>
+                  <input type="text" name="name" id="edit_name" class="form-control form-control-sm upper-case"
+                     required>
                   <span class="text-danger small editNameError"></span>
                </div>
                <div class="form-group">
@@ -186,16 +190,26 @@
          <div class="modal-body">
             <form id="formDelete" action="{{ url('category/delete') }}" method="post">
                <input type="hidden" name="id" id="delete_id">
-               <div class="form-group text-center">
-                  <label>Apakah anda yakin ingin menghapus category </label>
-                  <div class="text-bold"><span id="delete_name" class="text-danger"></span>
-                     ?</div>
+               <div class="d-flex align-items-center justify-content-center flex-column">
+                  <div class="bg-danger d-flex align-items-center justify-content-center rounded-circle mb-3"
+                     style="width: 100px; height: 100px;">
+                     <i class="fas fa-trash-alt fa-4x text-white"></i>
+                  </div>
+                  <div class="form-group text-center">
+                     <label>Apakah anda yakin ingin menghapus category </label>
+                     <div class="text-bold"><span id="delete_name" class="text-danger"></span>
+                        ?</div>
+                     <div class="bg-danger p-2 mt-3 rounded shadow-sm">
+                        <p class="text-white small mb-0">Data yang sudah terhapus tidak dapat dikembalikan!</p>
+                     </div>
+                  </div>
                </div>
             </form>
          </div>
          <div class="modal-footer justify-content-around">
             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-danger btn-sm" form="formDelete"><i class="fas fa-trash-alt"></i> Hapus</button>
+            <button type="submit" class="btn btn-danger btn-sm" form="formDelete"><i class="fas fa-trash-alt"></i> Ya,
+               Hapus!</button>
          </div>
       </div>
    </div>
@@ -212,12 +226,12 @@
          "autoWidth": false,
          "responsive": true,
          language: {
-         search: 'Cari:',
-         paginate: {
-            previous: '<i class="fas fa-angle-left"></i>',
-            next: '<i class="fas fa-angle-right"></i>'
+            search: 'Cari:',
+            paginate: {
+               previous: '<i class="fas fa-angle-left"></i>',
+               next: '<i class="fas fa-angle-right"></i>'
+            }
          }
-      }
       });
    });
 </script>
