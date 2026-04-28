@@ -60,7 +60,8 @@
 
                   <ul class="list-group list-group-unbordered mb-3">
                      <li class="list-group-item">
-                        <b>Total Transaksi</b> <a class="float-right">13,284</a>
+                        <b>Total Transaksi</b> <a class="float-right">{{ Helpers.number(qty_order) }}</a>
+                        {# <b>Total Transaksi</b> <a class="float-right">{{ Helpers.number(total_order) }}</a> #}
                      </li>
                      <!-- {% if session.role == 'ADMIN' %}
                      <li class="list-group-item">
@@ -109,7 +110,7 @@
                                  value="{{ session.role }}" readonly>
                            </div>
                            <div class="form-group">
-                              <label for="inputPassword"><i class="fas fa-key"></i> New Password</label>
+                              <label for="inputPassword">New Password</label>
                               <div class="input-group input-group-sm seamless-group">
                                  <input type="password" class="form-control border-right-0" id="inputPassword"
                                     name="password" placeholder="Password">
@@ -124,7 +125,7 @@
 
                         </div>
                         <div class="col-md-12 mt-2 text-right">
-                           <button type="submit" class="btn btn-sm btn-danger">Submit</button>
+                           <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                         </div>
                      </div>
                   </form>

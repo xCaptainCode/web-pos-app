@@ -6,7 +6,52 @@ class Helpers {
 
    public static function formatDateTime($dateTime, $format) {
       $date  = new DateTime($dateTime);
-      return $date->format($format);
+      $value = $date->format($format);
+
+      $replace = [
+         'Sunday'    => 'Minggu',
+         'Monday'    => 'Senin',
+         'Tuesday'   => 'Selasa',
+         'Wednesday' => 'Rabu',
+         'Thursday'  => 'Kamis',
+         'Friday'    => 'Jumat',
+         'Saturday'  => 'Sabtu',
+         'January'   => 'Januari',
+         'February'  => 'Februari',
+         'March'     => 'Maret',
+         'April'     => 'April',
+         'May'       => 'Mei',
+         'June'      => 'Juni',
+         'July'      => 'Juli',
+         'August'    => 'Agustus',
+         'September' => 'September',
+         'October'   => 'Oktober',
+         'November'  => 'November',
+         'December'  => 'Desember',
+         'Jan'       => 'Jan',
+         'Feb'       => 'Feb',
+         'Mar'       => 'Mar',
+         'Apr'       => 'Apr',
+         'May'       => 'Mei',
+         'Jun'       => 'Jun',
+         'Jul'       => 'Jul',
+         'Aug'       => 'Agt',
+         'Sep'       => 'Sep',
+         'Oct'       => 'Okt',
+         'Nov'       => 'Nov',
+         'Dec'       => 'Des',
+         'Sun'       => 'Min',
+         'Mon'       => 'Sen',
+         'Tue'       => 'Sel',
+         'Wed'       => 'Rab',
+         'Thu'       => 'Kam',
+         'Fri'       => 'Jum',
+         'Sat'       => 'Sab',
+      ];
+
+      $value = strtr($value, $replace);
+      
+      return $value;
    }
 
    public static function showTgl($tgl, $format) {

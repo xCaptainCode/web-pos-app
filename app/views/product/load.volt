@@ -18,12 +18,16 @@
                   <th>Stok</th>
                   <th>Harga</th>
                   <th>Status</th>
-                  <th style="width: 80px;">Aksi</th>
                </tr>
             </thead>
             <tbody>
                {% for product in products %}
-               <tr class="{% if product.stock <= 5 %}table-danger{% endif %}">
+               <tr class="{% if product.stock <= 5 %}table-danger{% endif %} btn-edit-product" style="cursor: pointer"
+                  data-toggle="modal"
+                  data-target="#modalEditProduct" data-id="{{ product.id }}" data-name="{{ product.name }}"
+                  data-description="{{ product.description }}" data-stock="{{ product.stock }}"
+                  data-price="{{ product.price }}" data-category_id="{{ product.category_id }}"
+                  data-is_active="{{ product.is_active ? '1' : '0' }}">
                   <td class="text-center">{{ loop.index }}</td>
                   <td class="text-left">{{ product.name }}</td>
                   <td class="text-center">{{ product.category_name|default('-') }}</td>
@@ -35,15 +39,6 @@
                      {% else %}
                      <span class="badge badge-danger">Tidak Aktif</span>
                      {% endif %}
-                  </td>
-                  <td class="text-center">
-                     <button type="button" class="btn btn-xs btn-warning btn-edit-product" data-toggle="modal"
-                        data-target="#modalEditProduct" data-id="{{ product.id }}" data-name="{{ product.name }}"
-                        data-description="{{ product.description }}" data-stock="{{ product.stock }}"
-                        data-price="{{ product.price }}" data-category_id="{{ product.category_id }}"
-                        data-is_active="{{ product.is_active ? '1' : '0' }}">
-                        <i class="fas fa-edit"></i> Edit
-                     </button>
                   </td>
                </tr>
                {% endfor %}
